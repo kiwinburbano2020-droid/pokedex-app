@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { getPokemonList } from './services/pokemonService';
 import PokemonCard from './components/PokemonCard';
+import PokemonModal from './components/PokemonModal';
 
 function App() {
   const [pokemonList, setPokemonList] = useState([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedPokemon, setSelectedPokemon] = useState(null);
 
   useEffect(() => {
     const fetchPokemons = async () => {
@@ -36,7 +38,7 @@ function App() {
           placeholder="Buscar por nombre..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          style={{ padding: '10px', width: '280px', borderRadius: '4px', border: '1px solid #cbd5e1' }}
+          style={{ padding: '10px', width: '280px', borderRadius: '6px', border: '1px solid #cbd5e1', outline: 'none' }}
         />
       </div>
 
@@ -47,12 +49,23 @@ function App() {
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
           {filteredPokemons.length > 0 ? (
             filteredPokemons.map((pokemon) => (
-              <PokemonCard key={pokemon.name} pokemonName={pokemon.name} />
+              <PokemonCard
+                key={pokemon.name}
+                pokemonName={pokemon.name}
+                onClick={(data) => setSelectedPokemon(data)}
+              />
             ))
           ) : (
             <p>No se encontraron coincidencias.</p>
           )}
         </div>
+      )}
+
+      {selectedPokemon && (
+        <PokemonModal
+          pokemon={selectedPokemon}
+          onClose={() => setSelectedPokemon(null)}
+        />
       )}
     </div>
   );
