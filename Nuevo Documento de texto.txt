@@ -1,0 +1,2 @@
+En Key: pusiste la URL, pero debe ser el nombre exacto de la variable:   Plaintext : VITE_POKEAPI_URL
+En Value: sigue estando el enlace con formato Markdown. Debe ser únicamente la URL limpia:   Plaintext : https://pokeapi.co/api/v2
